@@ -1,0 +1,15 @@
+import cv2
+image_path = "C:\\Users\\Ayyappan Studio\\Documents\\OneDrive\\Pictures\\exp2.jpg"  
+image = cv2.imread(image_path)
+(h, w) = image.shape[:2]
+center = (w // 2, h // 2)
+angle_clockwise = -90         
+angle_counterclockwise = 90   
+# Rotation matrices
+matrix_cw = cv2.getRotationMatrix2D(center, angle_clockwise, 1.0)
+matrix_ccw = cv2.getRotationMatrix2D(center, angle_counterclockwise, 1.0)
+rotated_cw = cv2.warpAffine(image, matrix_cw, (w, h))
+rotated_ccw = cv2.warpAffine(image, matrix_ccw, (w, h))
+cv2.imshow("Original Image", image)
+cv2.imshow("Clockwise Rotation (-90°)", rotated_cw)
+cv2.imshow("Counterclockwise Rotation (+90°)", rotated_ccw)
