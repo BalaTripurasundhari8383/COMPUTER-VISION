@@ -1,0 +1,13 @@
+import cv2
+import numpy as np
+source_path = r'C:\Users\SAIL\Pictures\image.jfif'  
+destination_path = r'C:\Users\SAIL\Pictures\transformed_image.jpg'  
+image = cv2.imread(source_path)
+if image is None:
+    print("Error: Image not found. Please check the file path.")
+else:
+    rows, cols, channels = image.shape
+    M = np.float32([[1, 0, 50], [0, 1, 100]])
+    transformed_image = cv2.warpAffine(image, M, (cols, rows))
+    cv2.imwrite(destination_path, transformed_image)
+    print(f"Affine transformation applied. Transformed image saved as {destination_path}")
