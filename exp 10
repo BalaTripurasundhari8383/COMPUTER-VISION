@@ -1,10 +1,10 @@
-import shutil
-import os
-source_path = r'C:\Users\SAIL\Downloads\image.jfif'  
-destination_path = r'C:\Users\SAIL\Pictures\image.jfif'  
-
-if os.path.exists(source_path):
-    shutil.move(source_path, destination_path)
-    print(f"Image moved successfully to {destination_path}")
-else:
-    print("Source file does not exist.")
+import cv2
+import numpy as np 
+image_path = r"C:\Users\SAIL\Pictures\image.jfif"
+image = cv2.imread(image_path)
+(h, w) = image.shape[:2]
+tx, ty = 100, 50  
+translation_matrix = np.float32([[1, 0, tx], [0, 1, ty]])
+translated_image = cv2.warpAffine(image, translation_matrix, (w, h))
+cv2.imshow("Original Image", image)
+cv2.imshow("Translated Image", translated_image)
