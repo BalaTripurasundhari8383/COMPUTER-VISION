@@ -1,0 +1,18 @@
+import numpy as np
+import cv2
+def compute_homography(src_pts, dst_pts):
+    A = []
+    for (x, y), (x_prime, y_prime) in zip(src_pts, dst_pts):
+        A.append([-x, -y, -1, 0, 0, 0, x * x_prime, y * x_prime, x_prime])
+        A.append([0, 0, 0, -x, -y, -1, x * y_prime, y * y_prime, y_prime])
+    A = np.array(A)
+    _, _, VT = np.linalg.svd(A)
+    return VT[-1].reshape(3, 3)
+def warp_image(image, H, target_size):
+    return cv2.warpPerspective(image, H, target_size)
+image = cv2.imread("C:\\Users\\SAIL\\Pictures\\download.jfif") 
+src_pts = np.float32([[100, 100], [400, 100], [100, 400], [400, 400]])
+dst_pts = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
+H = compute_homography(src_pts, dst_pts)
+warped_image = warp_image(image, H, (300, 300))
+cv2.imshow("Warped Image", warped_image)
